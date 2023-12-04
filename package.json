@@ -11,6 +11,7 @@
   "dependencies": {
     "@expo-google-fonts/amatic-sc": "^0.2.3",
     "@expo-google-fonts/inter": "^0.2.3",
+    "@react-native/metro-config": "^0.73.2",
     "expo": "~49.0.15",
     "expo-constants": "~14.4.2",
     "expo-font": "~11.4.0",
@@ -18,6 +19,7 @@
     "expo-router": "^2.0.0",
     "expo-splash-screen": "~0.20.5",
     "expo-status-bar": "~1.6.0",
+    "lottie-react-native": "5.1.6",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-native": "0.72.6",

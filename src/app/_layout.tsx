@@ -1,5 +1,5 @@
 import { Stack } from 'expo-router';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import {
@@ -15,10 +15,15 @@ import {
 } from '@expo-google-fonts/amatic-sc';
 
 import * as SplashScreen from 'expo-splash-screen';
+import AnimatedSplashScreen from '@/components/day4/AnimatedSplashScreen';
+import Animated, { FadeIn } from 'react-native-reanimated';
 
-SplashScreen.preventAutoHideAsync();
+// SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
+  const [appReady, setAppReady] = useState(false);
+  const [splashAnimationFinished, setSplashAnimationFinished] = useState(false);
+
   const [fontsLoaded, fontError] = useFonts({
     Inter: Inter_400Regular,
     InterSemi: Inter_600SemiBold,
@@ -31,19 +36,31 @@ export default function RootLayout() {
 
   useEffect(() => {
     if (fontsLoaded || fontError) {
-      SplashScreen.hideAsync();
+      // SplashScreen.hideAsync();
+      setAppReady(true);
     }
   }, [fontsLoaded, fontError]);
 
-  if (!fontsLoaded && !fontError) {
-    return null;
+  const showAnimatedSplash = !appReady || !splashAnimationFinished;
+  if (showAnimatedSplash) {
+    return (
+      <AnimatedSplashScreen
+        onAnimationFinish={(isCancelled) => {
+          if (!isCancelled) {
+            setSplashAnimationFinished(true);
+          }
+        }}
+      />
+    );
   }
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <Stack screenOptions={{}}>
-        <Stack.Screen name="index" options={{ title: 'DEVember' }} />
-      </Stack>
+      <Animated.View style={{ flex: 1 }} entering={FadeIn}>
+        <Stack screenOptions={{}}>
+          <Stack.Screen name="index" options={{ title: 'DEVember' }} />
+        </Stack>
+      </Animated.View>
     </GestureHandlerRootView>
   );
 }
