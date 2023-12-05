@@ -35,7 +35,6 @@ const AnimatedSplashScreen = ({
         style={{
           width: '80%',
           maxWidth: 400,
-          // backgroundColor: '#eee',
         }}
         // Find more Lottie files at https://lottiefiles.com/featured
         source={require('@assets/lottie/netflix.json')}
