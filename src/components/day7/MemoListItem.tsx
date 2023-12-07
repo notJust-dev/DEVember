@@ -4,18 +4,24 @@ import { useState, useEffect, useCallback } from 'react';
 import { AVPlaybackStatus, Audio } from 'expo-av';
 import { Sound } from 'expo-av/build/Audio';
 import Animated, {
+  Extrapolate,
+  interpolate,
   useAnimatedStyle,
   withTiming,
 } from 'react-native-reanimated';
 
-const MemoListItem = ({ uri }: { uri: string }) => {
+export type Memo = {
+  uri: string;
+  metering: number[];
+};
+
+const MemoListItem = ({ memo }: { memo: Memo }) => {
   const [sound, setSound] = useState<Sound>();
   const [status, setStatus] = useState<AVPlaybackStatus>();
 
   async function loadSound() {
-    console.log('Loading Sound');
     const { sound } = await Audio.Sound.createAsync(
-      { uri },
+      { uri: memo.uri },
       { progressUpdateIntervalMillis: 1000 / 60 },
       onPlaybackStatusUpdate
     );
@@ -39,7 +45,7 @@ const MemoListItem = ({ uri }: { uri: string }) => {
 
   useEffect(() => {
     loadSound();
-  }, [uri]);
+  }, [memo]);
 
   async function playSound() {
     if (!sound) {
@@ -82,6 +88,20 @@ const MemoListItem = ({ uri }: { uri: string }) => {
     // }),
   }));
 
+  let numLines = 50;
+  let lines = [];
+
+  for (let i = 0; i < numLines; i++) {
+    const meteringIndex = Math.floor((i * memo.metering.length) / numLines);
+    const nextMeteringIndex = Math.ceil(
+      ((i + 1) * memo.metering.length) / numLines
+    );
+    const values = memo.metering.slice(meteringIndex, nextMeteringIndex);
+    const average = values.reduce((sum, a) => sum + a, 0) / values.length;
+    // lines.push(memo.metering[meteringIndex]);
+    lines.push(average);
+  }
+
   return (
     <View style={styles.container}>
       <FontAwesome5
@@ -92,10 +112,26 @@ const MemoListItem = ({ uri }: { uri: string }) => {
       />
 
       <View style={styles.playbackContainer}>
-        <View style={styles.playbackBackground} />
-        <Animated.View
+        {/* <View style={styles.playbackBackground} /> */}
+
+        <View style={styles.wave}>
+          {lines.map((db, index) => (
+            <View
+              style={[
+                styles.waveLine,
+                {
+                  height: interpolate(db, [-60, 0], [5, 50], Extrapolate.CLAMP),
+                  backgroundColor:
+                    progress > index / lines.length ? 'royalblue' : 'gainsboro',
+                },
+              ]}
+            />
+          ))}
+        </View>
+
+        {/* <Animated.View
           style={[styles.playbackIndicator, animatedIndicatorStyle]}
-        />
+        /> */}
 
         <Text
           style={{
@@ -139,7 +175,7 @@ const styles = StyleSheet.create({
 
   playbackContainer: {
     flex: 1,
-    height: 50,
+    height: 80,
     justifyContent: 'center',
   },
   playbackBackground: {
@@ -153,6 +189,18 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: 'royalblue',
     position: 'absolute',
+  },
+
+  wave: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 3,
+  },
+  waveLine: {
+    flex: 1,
+    height: 30,
+    backgroundColor: 'gainsboro',
+    borderRadius: 20,
   },
 });
 
