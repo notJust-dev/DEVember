@@ -90,6 +90,11 @@ export default function MemosScreen() {
       bottom: size,
       left: size,
       right: size,
+      backgroundColor: `rgba(255, 45, 0, ${interpolate(
+        metering.value,
+        [-160, -60, -10],
+        [0.7, 0.3, 0.7]
+      )})`,
     };
   });
 
@@ -141,7 +146,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   recordWave: {
-    backgroundColor: '#FF000055',
     position: 'absolute',
     top: -20,
     bottom: -20,
