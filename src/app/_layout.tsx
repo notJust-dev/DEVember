@@ -17,10 +17,29 @@ import {
 import * as SplashScreen from 'expo-splash-screen';
 import AnimatedSplashScreen from '@/components/day4/AnimatedSplashScreen';
 import Animated, { FadeIn } from 'react-native-reanimated';
+import { ThemeProvider, Theme } from '@aws-amplify/ui-react-native';
 
 import { Amplify } from 'aws-amplify';
+import { Authenticator } from '@aws-amplify/ui-react-native';
 import ampplifyconfig from '@/amplifyconfiguration.json';
 Amplify.configure(ampplifyconfig);
+
+const theme: Theme = {
+  tokens: {
+    colors: {
+      brand: {
+        primary: 'red',
+      },
+
+      background: {
+        primary: '{colors.gray}',
+      },
+      font: {
+        primary: 'black',
+      },
+    },
+  },
+};
 
 // SplashScreen.preventAutoHideAsync();
 
@@ -59,12 +78,16 @@ export default function RootLayout() {
   }
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <Animated.View style={{ flex: 1 }} entering={FadeIn}>
-        <Stack screenOptions={{}}>
-          <Stack.Screen name="index" options={{ title: 'DEVember' }} />
-        </Stack>
-      </Animated.View>
-    </GestureHandlerRootView>
+    <Authenticator.Provider>
+      <ThemeProvider theme={theme}>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <Animated.View style={{ flex: 1 }} entering={FadeIn}>
+            <Stack screenOptions={{}}>
+              <Stack.Screen name="index" options={{ title: 'DEVember' }} />
+            </Stack>
+          </Animated.View>
+        </GestureHandlerRootView>
+      </ThemeProvider>
+    </Authenticator.Provider>
   );
 }
