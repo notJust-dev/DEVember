@@ -17,20 +17,34 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.vadinsavin.DEVember"
+      "bundleIdentifier": "com.vadinsavin.DEVember",
+      "infoPlist": {
+        "NSFaceIDUsageDescription": "Allow $(PRODUCT_NAME) to use Face ID to unlock Secret Info."
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.USE_BIOMETRIC",
+        "android.permission.USE_FINGERPRINT"
+      ],
+      "package": "com.vadinsavin.DEVember"
     },
     "web": {
       "favicon": "./assets/favicon.png",
       "bundler": "metro"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      [
+        "expo-local-authentication",
+        {
+          "faceIDPermission": "Allow $(PRODUCT_NAME) to use Face ID to unlock Secret Info."
+        }
+      ]
     ],
     "experiments": {
       "tsconfigPaths": true
