@@ -12,12 +12,16 @@
       "resizeMode": "contain",
       "backgroundColor": "#000000"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.vadinsavin.DEVember",
       "infoPlist": {
-        "NSFaceIDUsageDescription": "Allow $(PRODUCT_NAME) to use Face ID to unlock Secret Info."
+        "NSFaceIDUsageDescription": "Allow $(PRODUCT_NAME) to use Face ID to unlock Secret Info.",
+        "NSCameraUsageDescription": "$(PRODUCT_NAME) needs access to your Camera to take photos.",
+        "NSMicrophoneUsageDescription": "$(PRODUCT_NAME) needs access to your Microphone."
       }
     },
     "android": {
@@ -27,7 +31,9 @@
       },
       "permissions": [
         "android.permission.USE_BIOMETRIC",
-        "android.permission.USE_FINGERPRINT"
+        "android.permission.USE_FINGERPRINT",
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
       ],
       "package": "com.vadinsavin.DEVember"
     },
@@ -47,8 +53,6 @@
         "react-native-vision-camera",
         {
           "cameraPermissionText": "$(PRODUCT_NAME) needs access to your Camera to take photos.",
-
-          // optionally, if you want to record audio:
           "enableMicrophonePermission": true,
           "microphonePermissionText": "$(PRODUCT_NAME) needs access to your Microphone.",
           "enableCodeScanner": true
@@ -57,6 +61,20 @@
     ],
     "experiments": {
       "tsconfigPaths": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "ee991416-c2d4-425a-affe-4ea58d9aa6c0"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/ee991416-c2d4-425a-affe-4ea58d9aa6c0"
     }
   }
 }
