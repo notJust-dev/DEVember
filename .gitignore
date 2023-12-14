@@ -63,3 +63,4 @@ amplifytools.xcconfig
 
 
 !amplifyconfiguration.json
+!aws-exports.js

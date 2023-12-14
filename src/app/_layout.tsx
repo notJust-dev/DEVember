@@ -85,7 +85,7 @@ export default function RootLayout() {
           <GestureHandlerRootView style={{ flex: 1 }}>
             <Animated.View style={{ flex: 1 }} entering={FadeIn}>
               <Stack screenOptions={{}}>
-                <Stack.Screen name="index" options={{ title: 'DEVember' }} />
+                <Stack.Screen name="index" options={{ title: 'Updated' }} />
               </Stack>
             </Animated.View>
           </GestureHandlerRootView>
