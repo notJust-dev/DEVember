@@ -46,7 +46,9 @@
     "react-native-vision-camera": "^3.6.14",
     "react-native-web": "~0.19.6",
     "expo-updates": "~0.18.17",
-    "expo-dev-client": "~2.4.12"
+    "expo-dev-client": "~2.4.12",
+    "expo-notifications": "~0.20.1",
+    "expo-device": "~5.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
