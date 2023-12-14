@@ -4,7 +4,7 @@ import * as Notifications from 'expo-notifications';
 const NotificationsHomeScreen = () => {
   return (
     <View>
-      <Text>NotificationsHomeScreen</Text>
+      <Text>Notifications</Text>
 
       <Button
         title="Schedule test notifications"
@@ -21,7 +21,7 @@ async function schedulePushNotification() {
       body: 'Here is the notification body',
       data: { data: 'goes here', url: '/day6/tinder' },
     },
-    trigger: { seconds: 1 },
+    trigger: { seconds: 5 },
   });
 }
 

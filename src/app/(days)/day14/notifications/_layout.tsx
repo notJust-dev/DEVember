@@ -10,7 +10,7 @@ Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
     shouldPlaySound: false,
-    shouldSetBadge: false,
+    shouldSetBadge: true,
   }),
 });
 
@@ -71,6 +71,14 @@ const AppWithNotificationsLayout = () => {
   return (
     <>
       <Slot />
+
+      {expoPushToken && (
+        <Text
+          style={{ position: 'absolute', bottom: 100, backgroundColor: 'red' }}
+        >
+          {expoPushToken}
+        </Text>
+      )}
       {notification && (
         <View
           style={{
