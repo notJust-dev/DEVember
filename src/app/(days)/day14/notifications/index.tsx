@@ -10,7 +10,7 @@ const NotificationsHomeScreen = () => {
         title="Schedule test notifications"
         onPress={schedulePushNotification}
       />
-    </View>
+    </View> 
   );
 };
 
