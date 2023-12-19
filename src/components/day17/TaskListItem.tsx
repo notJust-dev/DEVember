@@ -3,6 +3,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { type Task } from './TasksContextProvider';
 import { useTasksStore } from './TasksStore';
+import { customEvent } from 'vexo-analytics';
 
 const AnimatedView = Animated.createAnimatedComponent(View);
 
@@ -55,16 +56,23 @@ type TaskListItem = {
 
 const TaskListItem = ({ task }: TaskListItem) => {
   const changeIsFinished = useTasksStore((state) => state.changeIsFinished);
+
+  const onPress = () => {
+    changeIsFinished(task.id);
+    customEvent('purchase', {
+      total: '123.45',
+      currency: 'usd',
+      products: ['Sneakers', 'Tshirt'],
+    });
+  };
+
   return (
     <Swipeable
       renderRightActions={(progressAnimatedValue, dragAnimatedValue) => (
         <RightActions dragAnimatedValue={dragAnimatedValue} task={task} />
       )}
     >
-      <Pressable
-        onPress={() => changeIsFinished(task.id)}
-        style={styles.taskContainer}
-      >
+      <Pressable onPress={onPress} style={styles.taskContainer}>
         <MaterialCommunityIcons
           name={
             task.isFinished

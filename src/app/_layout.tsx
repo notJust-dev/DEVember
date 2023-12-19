@@ -23,6 +23,10 @@ import { Amplify } from 'aws-amplify';
 import { Authenticator } from '@aws-amplify/ui-react-native';
 import ampplifyconfig from '@/amplifyconfiguration.json';
 import BiometricProvider from '@/components/day10/BiometricsProvider';
+
+import { vexo } from 'vexo-analytics';
+vexo(process.env.EXPO_PUBLIC_VEXO_API_KEY || '');
+
 Amplify.configure(ampplifyconfig);
 
 const theme: Theme = {
