@@ -1,6 +1,7 @@
 import { Stack } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { Platform } from 'react-native';
 
 import {
   useFonts,
@@ -23,6 +24,9 @@ import { Amplify } from 'aws-amplify';
 import { Authenticator } from '@aws-amplify/ui-react-native';
 import ampplifyconfig from '@/amplifyconfiguration.json';
 import BiometricProvider from '@/components/day10/BiometricsProvider';
+
+import Purchases from 'react-native-purchases';
+const REVENUECAT_IOS_KEY = process.env.EXPO_PUBLIC_REVENUECAT_IOS_KEY;
 
 import { vexo } from 'vexo-analytics';
 vexo(process.env.EXPO_PUBLIC_VEXO_API_KEY || '');
@@ -61,6 +65,12 @@ export default function RootLayout() {
     Amatic: AmaticSC_400Regular,
     AmaticBold: AmaticSC_700Bold,
   });
+
+  useEffect(() => {
+    if (Platform.OS === 'ios' && REVENUECAT_IOS_KEY) {
+      Purchases.configure({ apiKey: REVENUECAT_IOS_KEY });
+    }
+  }, []);
 
   useEffect(() => {
     if (fontsLoaded || fontError) {
